@@ -112,7 +112,19 @@ window.addEventListener('load', function(){
     }
 
     class UI {
-
+        constructor(game){
+            this.game = game;
+            this.fontSize = 25;
+            this.fontFamily = 'Helvetica';
+            this.color = 'white';
+        }
+        draw(context){
+            //ammo
+            context.fillStyle = this.color;
+            for (let i = 0; i < this.game.ammo; i++) {
+                context.fillRect(20 + 5 * i, 50, 3, 20);
+            }
+        }
     }
 
     class Game {
@@ -121,6 +133,7 @@ window.addEventListener('load', function(){
             this.height = height;
             this.player = new Player(this);
             this.input = new InputHandler(this);
+            this.ui = new UI(this);
             this.keys = []; // showing what button is pressed 
             this.ammo = 20;
             this.maxAmmo = 50;
@@ -142,6 +155,7 @@ window.addEventListener('load', function(){
 
         draw(context){
             this.player.draw(context);
+            this.ui.draw(context);
         }
     }
 
@@ -157,5 +171,6 @@ window.addEventListener('load', function(){
         requestAnimationFrame(animate);
     }
     animate(0);
+    console.log(game);
 });
 
