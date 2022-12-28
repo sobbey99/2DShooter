@@ -17,6 +17,8 @@ window.addEventListener('load', function(){
                     this.game.keys.push(e.key);
                 } else if ( e.key === ' ') {
                     this.game.player.shootTop();
+                } else if (e.key === 'd') {
+                    this.game.debug = !this.game.debug;
                 }
             });
 
@@ -96,8 +98,7 @@ window.addEventListener('load', function(){
             }
 
             draw(context){
-                context.fillStyle = 'black';
-                context.fillRect(this.x, this.y, this.width, this.height);
+                if(this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
                 context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
                 this.projectiles.forEach(projectile => {
                     projectile.draw(context);
@@ -262,6 +263,7 @@ window.addEventListener('load', function(){
             this.gameTime = 0;
             this.timeLimit = 50000;
             this.speed = 1;
+            this.debug = false;
         }
 
         update(deltaTime){
