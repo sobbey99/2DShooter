@@ -76,18 +76,22 @@ window.addEventListener('load', function(){
         update(){
             this.angle += this.va;
             this.speedY += this.gravity;
-            this.x -= this.speedX;
+            this.x -= this.speedX + this.game.speed;
             this.y += this.speedY;
             if(this.y > this.game.height + this.size || this.x < 0 - this.size){
                 this.markedForDeletion = true;
             }
-            if(this.y > this.game.height - this.bottomBounceBoundary && this.bounced < 2){
+            if(this.y > this.game.height - this.bottomBounceBoundary && this.bounced < 5){
                 this.bounced++;
                 this.speedY *= -0.5;
             }
         }
         draw(context){
-            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize,this.spriteSize,this.spriteSize, this.x, this.y, this.size, this.size)
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(this.angle);
+            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize,this.spriteSize,this.spriteSize, this.size * -0.5, this.size * -0.5, this.size, this.size);
+            context.restore();
         }
 
     }
@@ -407,7 +411,7 @@ class LuckyFish extends Enemy{
                 enemy.update();
                 if (this.checkCollision(this.player, enemy)) {
                     enemy.markedForDeletion = true;
-                    for(let i = 0; i < 10; i++) {
+                    for(let i = 0; i < 5; i++) {
                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                     }
                     if(enemy.type = 'lucky') {
@@ -422,7 +426,7 @@ class LuckyFish extends Enemy{
                         projectile.markedForDeletion = true;
                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                         if (enemy.lives <= 0) {
-                            for(let i = 0; i < 10; i++) {
+                            for(let i = 0; i < 5; i++) {
                                 this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                             }
                             enemy.markedForDeletion = true;
