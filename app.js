@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
     // canvas setup
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 700;
+    canvas.width = 1000;
     canvas.height= 500;
 
     class InputHandler {
@@ -234,7 +234,7 @@ window.addEventListener('load', function(){
                 this.y = Math.random() * (this.game.height * 0.95 - this.height);
                 this.image = document.getElementById('angler1');
                 this.frameY = Math.floor(Math.random() * 3);
-                this.lives = 2;
+                this.lives = 5;
                 this.score = this.lives;
             }
     }
@@ -247,7 +247,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler2');
             this.frameY = Math.floor(Math.random() * 2);
-            this.lives = 3;
+            this.lives = 6;
             this.score = this.lives;
         }
 }
@@ -260,7 +260,7 @@ class LuckyFish extends Enemy{
         this.y = Math.random() * (this.game.height * 0.95 - this.height);
         this.image = document.getElementById('lucky');
         this.frameY = Math.floor(Math.random() * 2);
-        this.lives = 3;
+        this.lives = 5;
         this.score = 15;
         this.type = 'lucky';
     }
@@ -274,7 +274,7 @@ class HiveWhale extends Enemy{
         this.y = Math.random() * (this.game.height * 0.95 - this.height);
         this.image = document.getElementById('hivewhale');
         this.frameY = 0;
-        this.lives = 15;
+        this.lives = 20;
         this.score = this.lives;
         this.type = 'hive';
         this.speedX = Math.random() * -1.2 - 0.2;
@@ -457,16 +457,16 @@ class Drone extends Enemy{
             this.particles = [];
             this.explosions = [];
             this.enemyTimer = 0;
-            this.enemyInterval = 1000;
+            this.enemyInterval = 2000;
             this.ammo = 20;
             this.maxAmmo = 50;
             this.ammoTimer = 0;
-            this.ammoInterval = 500;
+            this.ammoInterval = 350;
             this.gameOver = false;
             this.score = 0;
-            this.winningScore = 1000;
+            this.winningScore = 80;
             this.gameTime = 0;
-            this.timeLimit = 50000;
+            this.timeLimit = 30000;
             this.speed = 1;
             this.debug = false;
         }
@@ -506,7 +506,7 @@ class Drone extends Enemy{
                     }
                     if(enemy.type === 'lucky') {
                         this.player.enterPowerUp();
-                    } else {
+                    } else if (!this.gameOver){
                         this.score--;
                     }
                 }
@@ -567,7 +567,7 @@ class Drone extends Enemy{
             else if (randomize < 0.6) {
                 this.enemies.push(new Angler2(this));
             }
-            else if (randomize < 0.8) {
+            else if (randomize < 0.7) {
                 this.enemies.push(new HiveWhale(this));
             } 
             else {
